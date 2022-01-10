@@ -27,12 +27,8 @@
     ]
   },
   "projects": {
-    "nx-ng-bug": {
+    "ng-lib": {
       "tags": []
-    },
-    "nx-ng-bug-e2e": {
-      "tags": [],
-      "implicitDependencies": ["nx-ng-bug"]
     }
   }
 }

@@ -1,121 +1,43 @@
 {
   "version": 1,
   "projects": {
-    "nx-ng-bug": {
-      "projectType": "application",
-      "root": "apps/nx-ng-bug",
-      "sourceRoot": "apps/nx-ng-bug/src",
+    "ng-lib": {
+      "projectType": "library",
+      "root": "libs/ng-lib",
+      "sourceRoot": "libs/ng-lib/src",
       "prefix": "nx-ng",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
-          "outputs": ["{options.outputPath}"],
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "outputs": ["dist/libs/ng-lib"],
           "options": {
-            "outputPath": "dist/apps/nx-ng-bug",
-            "index": "apps/nx-ng-bug/src/index.html",
-            "main": "apps/nx-ng-bug/src/main.ts",
-            "polyfills": "apps/nx-ng-bug/src/polyfills.ts",
-            "tsConfig": "apps/nx-ng-bug/tsconfig.app.json",
-            "assets": [
-              "apps/nx-ng-bug/src/favicon.ico",
-              "apps/nx-ng-bug/src/assets"
-            ],
-            "styles": ["apps/nx-ng-bug/src/styles.css"],
-            "scripts": []
+            "project": "libs/ng-lib/ng-package.json"
           },
           "configurations": {
             "production": {
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
-                },
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "2kb",
-                  "maximumError": "4kb"
-                }
-              ],
-              "fileReplacements": [
-                {
-                  "replace": "apps/nx-ng-bug/src/environments/environment.ts",
-                  "with": "apps/nx-ng-bug/src/environments/environment.prod.ts"
-                }
-              ],
-              "outputHashing": "all"
+              "tsConfig": "libs/ng-lib/tsconfig.lib.prod.json"
             },
             "development": {
-              "buildOptimizer": false,
-              "optimization": false,
-              "vendorChunk": true,
-              "extractLicenses": false,
-              "sourceMap": true,
-              "namedChunks": true
+              "tsConfig": "libs/ng-lib/tsconfig.lib.json"
             }
           },
           "defaultConfiguration": "production"
         },
-        "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
-          "configurations": {
-            "production": {
-              "browserTarget": "nx-ng-bug:build:production"
-            },
-            "development": {
-              "browserTarget": "nx-ng-bug:build:development"
-            }
-          },
-          "defaultConfiguration": "development"
-        },
-        "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n",
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/ng-lib"],
           "options": {
-            "browserTarget": "nx-ng-bug:build"
+            "jestConfig": "libs/ng-lib/jest.config.js",
+            "passWithNoTests": true
           }
         },
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": [
-              "apps/nx-ng-bug/src/**/*.ts",
-              "apps/nx-ng-bug/src/**/*.html"
+              "libs/ng-lib/src/**/*.ts",
+              "libs/ng-lib/src/**/*.html"
             ]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/apps/nx-ng-bug"],
-          "options": {
-            "jestConfig": "apps/nx-ng-bug/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      }
-    },
-    "nx-ng-bug-e2e": {
-      "root": "apps/nx-ng-bug-e2e",
-      "sourceRoot": "apps/nx-ng-bug-e2e/src",
-      "projectType": "application",
-      "architect": {
-        "e2e": {
-          "builder": "@nrwl/cypress:cypress",
-          "options": {
-            "cypressConfig": "apps/nx-ng-bug-e2e/cypress.json",
-            "devServerTarget": "nx-ng-bug:serve:development",
-            "tsConfig": "apps/nx-ng-bug-e2e/tsconfig.json"
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "nx-ng-bug:serve:production"
-            }
-          }
-        },
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "outputs": ["{options.outputFile}"],
-          "options": {
-            "lintFilePatterns": ["apps/nx-ng-bug-e2e/**/*.{js,ts}"]
           }
         }
       }
@@ -152,5 +74,5 @@
       "style": "css"
     }
   },
-  "defaultProject": "nx-ng-bug"
+  "defaultProject": "ng-lib"
 }
